@@ -41,6 +41,8 @@ camera.position.z = 10;
 let x = 5;
 let y = 2;
 
+window.addEventListener( 'pointermove', onPointerMove );
+
 function animate() {
 	cube.rotation.x += 0.01;
 	cube.rotation.y += 0.01;
@@ -51,8 +53,27 @@ function animate() {
 	camera.position.y = 3 * Math.sin(y);
 	y-=0.03;
 
+	// update the picking ray with the camera and pointer position
+	raycaster.setFromCamera( pointer, camera );
+
+	// calculate objects intersecting the picking ray
+	const intersects = raycaster.intersectObjects( scene.children );
+
+	for ( let i = 0; i < intersects.length; i ++ ) {
+		intersects[ i ].object.material.color.set( 0xff0000 );
+	}
+
 	renderer.render( scene, camera );
 }
+
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+
+function onPointerMove( event ) {
+	pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+	pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+}
+
 renderer.setAnimationLoop( animate );
 
 </script>
