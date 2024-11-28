@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000 );
@@ -24,10 +24,10 @@ const line = new THREE.Line( lineGeometry, lineMaterial );
 scene.add ( line );
 
 const loader = new GLTFLoader();
-loader.load( '/scene.gltf', function ( gltf ) {
+loader.load( '/scene.gltf', function ( gltf: GLTF ) {
 	gltf.scene.scale.set( 20, 20, 20 );
 	scene.add( gltf.scene );
-}, undefined, function ( error ) {
+}, undefined, function ( error: unknown ) {
 	console.error( error );
 } );
 
