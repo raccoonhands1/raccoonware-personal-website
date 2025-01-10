@@ -96,7 +96,7 @@ onMounted(() => {
         renderer.render(scene, camera);
     }
 
-    const raycaster = new THREE.Raycaster();
+    // const raycaster = new THREE.Raycaster();
     const pointer = new THREE.Vector2();
 
     function onPointerMove(event: any) {

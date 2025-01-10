@@ -8,6 +8,10 @@ const sections = {
     phone: "(408) 335 8370",
     email: "cmcruse15@gmail.com"
   },
+  social: {
+    linkedin: "https://www.linkedin.com/in/claytoncruse",
+    github: "https://github.com/claytoncruse"
+  },
   education: [
     "Santa Clara High School graduate (4.0+ GPA)",
     "Student at De Anza College (3.76 GPA as of transfer date)",
@@ -137,6 +141,16 @@ const sections = {
         </li>
       </ul>
     </section>
+
+    <!-- Social Links -->
+    <footer class="social-links">
+      <a :href="sections.social.linkedin" target="_blank" class="social-link">
+        <i class="fab fa-linkedin"></i> LinkedIn
+      </a>
+      <a :href="sections.social.github" target="_blank" class="social-link">
+        <i class="fab fa-github"></i> GitHub
+      </a>
+    </footer>
   </div>
 </template>
 
@@ -155,22 +169,20 @@ const sections = {
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin-bottom: 0.5rem;
-  color: #ffeaea;
-  font-weight: 800;
-
+  color: #2c3e50;
 }
 
 h2 {
-  color: #d6c1c1;
-  border-bottom: 2px solid #a8dcff;
+  color: #2c3e50;
+  border-bottom: 2px solid #3498db;
   padding-bottom: 0.3rem;
   margin: 1.5rem 0 1rem 0;
 }
 
 h3 {
-  color: #856d6d;
+  color: #34495e;
   margin: 1rem 0 0.5rem 0;
 }
 
@@ -202,5 +214,36 @@ li:before {
 
 p {
   margin: 0.5rem 0;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e1e1e1;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: #3498db;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  background-color: #3498db;
+  color: white;
+}
+
+@media print {
+  .social-links {
+    display: none;
+  }
 }
 </style>
