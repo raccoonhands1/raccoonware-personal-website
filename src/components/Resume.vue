@@ -1,3 +1,4 @@
+# App.vue
 <script setup>
 import { ref } from 'vue'
 
@@ -9,8 +10,8 @@ const sections = {
     email: "cmcruse15@gmail.com"
   },
   social: {
-    linkedin: "https://www.linkedin.com/in/claytoncruse",
-    github: "https://github.com/claytoncruse"
+    linkedin: "https://www.linkedin.com/in/clayton-cruse-2b02b823b/",
+    github: "https://github.com/raccoonhands1"
   },
   education: [
     "Santa Clara High School graduate (4.0+ GPA)",
@@ -19,8 +20,9 @@ const sections = {
   ],
   relevantCourses: [
     "Data Structures and Algorithms",
-    "Intro to C++",
-    "Intermediate C++", 
+    "C++ (full series)",
+    "Discrete Math",
+    "Probability and Stats for Engineers", 
     "x86 Processor Assembly Language",
     "Python"
   ],
@@ -46,7 +48,7 @@ const sections = {
     {
       title: "Catchup",
       points: [
-        "A platform which allows enterprises to share their research with peers and filter new papers by whichever subjects interest them or affect their startups or companies. Catchup! uses multiple AI agents in its backend to help the user tailor their own experience. https://trycatchup.vercel.app/ Prod is still in active development.",
+        "A platform which allows enterprises to share their research with peers and filter new papers by whichever subjects interest them or affect their startups or companies. Catchup! uses multiple AI agents in its backend to help the user tailor their own experience. https://trycatchup.vercel.app/ Prod is still in development.",
         "Winner of the Groq and MultiOn awards at the Agents that Work 2.0 hackathon at CloudFlare."
       ]
     }
@@ -67,183 +69,289 @@ const sections = {
     "Medtech and Neurotech"
   ]
 }
+
+const activeExpTab = ref('neurofocus')
+const activeAchTab = ref('berkeley')
+const showMore = ref(false)
 </script>
 
 <template>
   <div class="resume">
-    <!-- Header -->
-    <header class="header">
-      <h1>{{ sections.contact.name }}</h1>
-      <p>
-        {{ sections.contact.location }} ⧫ 
-        Tele: {{ sections.contact.phone }} ⧫ 
-        Email: {{ sections.contact.email }}
-      </p>
-    </header>
 
-    <!-- Education -->
-    <section>
-      <h2>Education:</h2>
+    <div class="section-spacing"></div>
+
+    <!-- Header -->
+    <div class="cs-dialog header">
+      <div class="heading">
+        <div class="wrapper">
+          <div class="icon"></div>
+          <div class="text">{{ sections.contact.name }}</div>
+        </div>
+      </div>
+      <div class="content contact-info">
+        {{ sections.contact.location }} • 
+        {{ sections.contact.phone }} • 
+        {{ sections.contact.email }}
+      </div>
+    </div>
+
+    <div class="section-spacing"></div>
+
+    <!-- Education Section -->
+    <div class="section">
+      <h2>Education</h2>
+      <hr class="cs-hr">
       <ul>
         <li v-for="(edu, index) in sections.education" :key="index">
           {{ edu }}
         </li>
       </ul>
-    </section>
+    </div>
 
-    <!-- Relevant Courses -->
-    <section>
-      <h2>Relevant Courses:</h2>
-      <p>{{ sections.relevantCourses.join(', ') }}</p>
-    </section>
+    <div class="section-spacing"></div>
 
-    <!-- Technical Skills -->
-    <section>
-      <h2>Technical Skills:</h2>
-      <p>{{ sections.technicalSkills.join(', ') }}</p>
-    </section>
+    <!-- Skills Section -->
+    <div class="section">
+      <h2>Skills</h2>
+      <hr class="cs-hr">
+      
+      <h3>Technical Skills</h3>
+      <div class="skills-grid">
+        <button v-for="skill in sections.technicalSkills" 
+                :key="skill"
+                class="cs-btn">
+          {{ skill }}
+        </button>
+      </div>
+      
+      <h3>Relevant Courses</h3>
+      <div class="courses-list">
+        <div v-for="course in sections.relevantCourses" 
+             :key="course"
+             class="cs-checkbox">
+          <input type="checkbox" :id="course">
+          <label :for="course" class="cs-checkbox__label">{{ course }}</label>
+        </div>
+      </div>
+    </div>
 
-    <!-- Experience -->
-    <section>
-      <h2>Ongoing and Past Experience (Earliest to Newest):</h2>
-      <div v-for="(exp, index) in sections.experience" :key="index" class="experience-item">
-        <h3>{{ exp.title }}</h3>
+    <div class="section-spacing"></div>
+
+    <!-- Experience Section -->
+    <div class="section">
+      <h2>Experience</h2>
+      <hr class="cs-hr">
+      
+      <div class="cs-tabs">
+        <input type="radio" name="exp-tabs" class="radiotab" id="tab-neurofocus" 
+               v-model="activeExpTab" value="neurofocus">
+        <label for="tab-neurofocus" class="label">Neurofocus</label>
+        <div class="panel">
+          <ul>
+            <li v-for="(point, index) in sections.experience[0].points" 
+                :key="index">
+              {{ point }}
+            </li>
+          </ul>
+        </div>
+
+        <input type="radio" name="exp-tabs" class="radiotab" id="tab-neural" 
+               v-model="activeExpTab" value="neural">
+        <label for="tab-neural" class="label">NeuralNurse</label>
+        <div class="panel">
+          <ul>
+            <li v-for="(point, index) in sections.experience[1].points" 
+                :key="index">
+              {{ point }}
+            </li>
+          </ul>
+        </div>
+
+        <input type="radio" name="exp-tabs" class="radiotab" id="tab-catchup" 
+               v-model="activeExpTab" value="catchup">
+        <label for="tab-catchup" class="label">Catchup</label>
+        <div class="panel">
+          <ul>
+            <li v-for="(point, index) in sections.experience[2].points" 
+                :key="index">
+              {{ point }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-spacing"></div>
+
+    <!-- Achievements Section -->
+    <div class="section">
+      <h2>Achievements</h2>
+      <hr class="cs-hr">
+      
+      <div class="achievement-list">
         <ul>
-          <li v-for="(point, pIndex) in exp.points" :key="pIndex">
-            {{ point }}
+          <li v-for="achievement in sections.achievements" 
+              :key="achievement">
+            {{ achievement }}
           </li>
         </ul>
       </div>
-    </section>
+    </div>
 
-    <!-- Leadership -->
-    <section>
-      <h2>Leadership Experience:</h2>
-      <p>{{ sections.leadership.join(' ') }}</p>
-    </section>
+    <div class="section-spacing"></div>
 
-    <!-- Achievements -->
-    <section>
-      <h2>Achievements:</h2>
-      <ul>
-        <li v-for="(achievement, index) in sections.achievements" :key="index">
-          {{ achievement }}
-        </li>
-      </ul>
-    </section>
+    <!-- More Button -->
+    <div class="section">
+      <button class="cs-btn" @click="showMore = !showMore">
+        {{ showMore ? 'Less Info' : 'More Info' }}
+      </button>
 
-    <!-- Other Interests -->
-    <section>
-      <h2>Other Interests:</h2>
-      <ul>
-        <li v-for="(interest, index) in sections.interests" :key="index">
-          {{ interest }}
-        </li>
-      </ul>
-    </section>
+      <div v-if="showMore" class="more-content">
+        <div class="subsection">
+          <h3>Leadership Experience</h3>
+          <p>{{ sections.leadership.join(' ') }}</p>
+        </div>
 
-    <!-- Social Links -->
-    <footer class="social-links">
-      <a :href="sections.social.linkedin" target="_blank" class="social-link">
-        <i class="fab fa-linkedin"></i> LinkedIn
+        <div class="subsection">
+          <h3>Other Interests</h3>
+          <ul>
+            <li v-for="interest in sections.interests" 
+                :key="interest">
+              {{ interest }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-spacing"></div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <a :href="sections.social.linkedin" 
+         target="_blank" 
+         class="cs-btn">
+        LinkedIn
       </a>
-      <a :href="sections.social.github" target="_blank" class="social-link">
-        <i class="fab fa-github"></i> GitHub
+      <a :href="sections.social.github" 
+         target="_blank" 
+         class="cs-btn">
+        GitHub
       </a>
-    </footer>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .resume {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 2rem auto;
-  padding: 2rem;
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
+  padding: 1rem;
 }
 
 .header {
-  text-align: center;
+  position: relative;
   margin-bottom: 2rem;
 }
 
-h1 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-  color: #2c3e50;
+.section {
+  margin-bottom: 2rem;
 }
 
 h2 {
-  color: #2c3e50;
-  border-bottom: 2px solid #3498db;
-  padding-bottom: 0.3rem;
-  margin: 1.5rem 0 1rem 0;
-}
-
-h3 {
-  color: #34495e;
-  margin: 1rem 0 0.5rem 0;
-}
-
-section {
-  margin-bottom: 1.5rem;
-}
-
-ul {
-  list-style-type: none;
-  padding-left: 1.2rem;
-}
-
-li {
+  color: var(--accent);
   margin-bottom: 0.5rem;
 }
 
-li:before {
-  content: "•";
-  color: #3498db;
-  font-weight: bold;
-  display: inline-block;
-  width: 1em;
-  margin-left: -1em;
+h3 {
+  margin: 1.5rem 0 1rem;
+  color: var(--accent);
 }
 
-.experience-item {
+.cs-hr {
+  margin: 0.5rem 0 1.5rem;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+.courses-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1rem auto;
+  max-width: 50%;
+}
+
+
+.more-content {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--secondary-bg);
+  border: 1px solid var(--border-light);
+}
+
+.subsection {
   margin-bottom: 1.5rem;
 }
 
-p {
-  margin: 0.5rem 0;
+.subsection:last-child {
+  margin-bottom: 0;
 }
 
-.social-links {
+.footer {
   display: flex;
   justify-content: center;
   gap: 2rem;
   margin-top: 3rem;
-  padding-top: 2rem;
-  border-top: 1px solid #e1e1e1;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-light);
 }
 
-.social-link {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  text-decoration: none;
-  color: #3498db;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  transition: all 0.3s ease;
+.section-spacing {
+  height: 32px;
+  width: 100%;
+  display: block;
 }
 
-.social-link:hover {
-  background-color: #3498db;
-  color: white;
+ul {
+  list-style-type: none;
+  padding-left: 1.5rem;
 }
 
-@media print {
-  .social-links {
-    display: none;
+ul li {
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+ul li::before {
+  content: ">";
+  position: absolute;
+  left: -1.5rem;
+  color: var(--accent);
+}
+
+/* cs-btn styles reset to remove rounded corners and purple glow */
+.cs-btn {
+  border-radius: 0;
+  transition: none;
+}
+
+.cs-btn:hover {
+  box-shadow: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .skills-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+
+  .courses-list {
+    grid-template-columns: 1fr;
   }
 }
 </style>
