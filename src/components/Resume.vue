@@ -129,7 +129,7 @@ const showMore = ref(false)
         <div v-for="course in sections.relevantCourses" 
              :key="course"
              class="cs-checkbox">
-          <input type="checkbox" :id="course">
+          <input type="checkbox" :id="course" checked="true">
           <label :for="course" class="cs-checkbox__label">{{ course }}</label>
         </div>
       </div>
