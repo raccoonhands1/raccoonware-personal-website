@@ -5,5 +5,7 @@
   
   <script setup>
   // App level logic if needed
+  window.location.href = "https://youtu.be/MLEjDDm8L2A";
+
   console.log("here")
   </script>
